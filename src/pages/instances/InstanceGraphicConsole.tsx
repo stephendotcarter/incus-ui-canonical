@@ -43,6 +43,11 @@ const InstanceGraphicConsole: FC<Props> = ({
   const isRunning = isInstanceRunning(instance);
 
   const handleError = (e: object) => {
+    const path = window.location.pathname;
+    const consolePath = /\/instance\/.+\/console$/.test(path);
+
+    if (!consolePath) return;
+
     onFailure("Console error", e);
   };
 
