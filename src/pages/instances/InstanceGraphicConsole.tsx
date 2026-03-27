@@ -42,7 +42,11 @@ const InstanceGraphicConsole: FC<Props> = ({
 
   const isRunning = isInstanceRunning(instance);
 
+  let isConsoleActive = true;
+
   const handleError = (e: object) => {
+    if (!isConsoleActive) return;
+
     onFailure("Console error", e);
   };
 
@@ -134,6 +138,7 @@ const InstanceGraphicConsole: FC<Props> = ({
     notify.clear();
     const websocketPromise = openVgaConsole();
     return () => {
+      isConsoleActive = false;
       try {
         window.spice_connection?.stop();
       } catch (e) {
